@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<body>
+    {% extends 'public/base.html' %}
+
+    {% block title %}Lab {{ lab_id }} - Task{% endblock %}
+
+    {% block content %}
+    <div class="container my-5">
+        <h2 class="display-4 text-center">Lab {{ lab_id }} Task</h2>
+        <hr class="my-4">
+        
+        <p class="lead">Objective: <em>{{ objective }}</em></p>
+
+        <h3>Images:</h3>
+        {% for image_name in images %}
+            <div class="image-section">
+                <h4>Part {{ loop.index }}:</h4>
+                <img src="{{ url_for('static', filename='assets/img/image_for_lab' + lab_id|string + '/' + image_name) }}"
+                    alt="Lab {{ lab_id }} Image {{ loop.index }}"
+                    class="img-fluid photo-placeholder">
+            </div>
+        {% endfor %}
+
+        <div class="text-center mt-5">
+            <a href="{{ url_for('public.labs') }}" class="btn btn-primary">Back to Labs</a>
+        </div>
+    </div>
+    {% endblock %}
+</body>
+</html>

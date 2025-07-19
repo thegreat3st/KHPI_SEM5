@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<body>
+    {% extends 'public/base.html' %}
+
+    {% block title %}Lab {{ lab_id }} - Tour Results{% endblock %}
+    
+    {% block content %}
+    <div class="container my-5">
+        <h2 class="text-center">Lab {{ lab_id }} Tour Results</h2>
+        <hr>
+
+        <!-- Static Full Tour Table (Shown by Default Before Filtering) -->
+        <h3>All Tours</h3>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Country</th>
+                    <th>Operator</th>
+                    <th>Price</th>
+                    <th>Days</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if not request.args %}
+                    {% for trip in trips %}
+                        <tr>
+                            <td>{{ trip.country }}</td>
+                            <td>{{ trip.operator }}</td>
+                            <td>{{ trip.price }}</td>
+                            <td>{{ trip.days }}</td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    {% for trip in filtered_trips %}
+                        <tr>
+                            <td>{{ trip.country }}</td>
+                            <td>{{ trip.operator }}</td>
+                            <td>{{ trip.price }}</td>
+                            <td>{{ trip.days }}</td>
+                        </tr>
+                    {% endfor %}
+                    {% if filtered_trips|length == 0 %}
+                        <tr>
+                            <td colspan="4" class="text-center">No trips found for the selected filters.</td>
+                        </tr>
+                    {% endif %}
+                {% endif %}
+            </tbody>
+        </table>
+
+        <!-- Filtering Form -->
+        <h3>Filter Options</h3>
+        <form method="get" action="{{ url_for('public.lab.get_filtered_tours', lab_id=lab_id) }}">
+            <div class="form-group">
+                <label for="operator">Operator Name:</label>
+                <input
+                    type="text"
+                    name="operator"
+                    placeholder="Operator name"
+                    value="{{ request.args.get('operator', '') }}"
+                    class="form-control"
+                />
+                {% if operator_error %}
+                    <span class="text-danger">{{ operator_error }}</span>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="days">Minimum Days:</label>
+                <input
+                    type="number"
+                    name="days_min"
+                    placeholder="Minimum days"
+                    value="{{ request.args.get('days_min', '') }}"
+                    class="form-control"
+                />
+            </div>
+
+            <div class="form-group">
+                <label for="country">Select Country:</label>
+                <select name="country" class="form-control">
+                    <option value="">All Countries</option>
+                    {% for country in unique_countries %}
+                        <option value="{{ country }}" {{ 'selected' if request.args.get('country') == country else '' }}>
+                            {{ country }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <!-- Radio Buttons for Turkey Trips -->
+            <div class="form-group mt-3">
+                <label for="show_turkey">Turkey Trips:</label><br>
+                <input
+                    type="radio"
+                    name="show_turkey"
+                    value="most_expensive"
+                    {% if show_turkey == "most_expensive" %}checked{% endif %}
+                />
+                Most Expensive Trip<br>
+                <input
+                    type="radio"
+                    name="show_turkey"
+                    value="least_expensive"
+                    {% if show_turkey == "least_expensive" %}checked{% endif %}
+                />
+                Cheapest Trip
+            </div>
+
+            <!-- Buttons -->
+            <div class="d-flex justify-content-start mt-3">
+                <button type="submit" class="btn btn-primary">Apply Filters</button>
+                <a href="{{ url_for('public.lab.get_filtered_tours', lab_id=lab_id) }}" class="btn btn-secondary ms-3">Clear Filters</a>
+            </div>
+        </form>
+
+        <!-- Display Selected Turkey Trip -->
+        <h3 class="mt-5">Selected Turkey Trip</h3>
+        {% if selected_turkey_trip %}
+            <p>Country: {{ selected_turkey_trip.country }}</p>
+            <p>Operator: {{ selected_turkey_trip.operator }}</p>
+            <p>Price: {{ selected_turkey_trip.price }}</p>
+            <p>Days: {{ selected_turkey_trip.days }}</p>
+        {% else %}
+            <p>No Turkey trip for the selected filters or selection.</p>
+        {% endif %}
+
+        <!-- Navigation Buttons for Pages 1, 2, and 3 -->
+        <div class="text-center mt-4">
+            <a href="{{ url_for('public.lab.page1', lab_id=lab_id) }}" class="btn btn-info mx-2">Page 1</a>
+            <a href="{{ url_for('public.lab.page2', lab_id=lab_id) }}" class="btn btn-info mx-2">Page 2</a>
+            <a href="{{ url_for('public.lab.page3', lab_id=lab_id) }}" class="btn btn-info mx-2">Page 3</a>
+        </div>
+
+        <!-- Back to Result Button -->
+        <div class="text-center mt-5">
+            <a href="{{ url_for('public.lab.lab_result', lab_id=lab_id) }}" class="btn btn-secondary">Back to Lab {{ lab_id }} Result</a>
+        </div>
+    </div>
+    {% endblock %}
+</body>
+</html>

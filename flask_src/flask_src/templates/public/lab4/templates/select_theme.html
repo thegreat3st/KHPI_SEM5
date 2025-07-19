@@ -1,0 +1,178 @@
+{% extends 'public/lab4/templates/lab4_base.html' %}
+
+{% block content %}
+<div class="container">
+    <div id="theme-selection-container">
+        <h2 id="theme-header">Choose a theme for the word</h2>
+        <div id="theme-buttons">
+            {% for theme in themes %}
+                <button class="theme-button" 
+                        data-theme="{{ theme }}" 
+                        data-description="{{ theme_descriptions[theme] }}">
+                    {{ theme }}
+                </button>
+            {% endfor %}
+        </div>
+    </div>
+    <div id="word-selection-container" class="hidden">
+        <h3>Select Word:</h3>
+        <div class="word-buttons">
+            <button id="random-word-button">Randomly</button>
+            <button id="manual-word-trigger">Manually</button>
+        </div>
+        <div id="manual-word-container" class="hidden">
+            <input type="text" id="manual-word-input" placeholder="Enter your word manually..." required>
+            <button id="manual-word-button">Submit Word</button>
+        </div>
+    </div>
+</div>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const themeButtons = document.querySelectorAll(".theme-button");
+        const themeSelectionContainer = document.getElementById("theme-selection-container");
+        const wordSelectionContainer = document.getElementById("word-selection-container");
+        const randomWordButton = document.getElementById("random-word-button");
+        const manualWordTrigger = document.getElementById("manual-word-trigger");
+        const manualWordContainer = document.getElementById("manual-word-container");
+        const manualWordButton = document.getElementById("manual-word-button");
+
+        let selectedTheme = null;
+
+        // Add tooltip logic
+        const createTooltip = (button, description) => {
+            let tooltip = button.querySelector(".theme-tooltip");
+            if (!tooltip) {
+                tooltip = document.createElement("div");
+                tooltip.className = "theme-tooltip";
+                tooltip.innerText = description;
+
+                button.appendChild(tooltip);
+
+                // Position tooltip
+                tooltip.style.position = "absolute";
+                tooltip.style.top = `${button.offsetHeight + 5}px`;
+                tooltip.style.left = "50%";
+                tooltip.style.transform = "translateX(-50%)";
+                tooltip.style.backgroundColor = "#333";
+                tooltip.style.color = "#fff";
+                tooltip.style.padding = "5px 10px";
+                tooltip.style.borderRadius = "4px";
+                tooltip.style.fontSize = "14px";
+                tooltip.style.boxShadow = "0 2px 5px rgba(0, 0, 0, 0.3)";
+                tooltip.style.zIndex = "10";
+            }
+        };
+
+        themeButtons.forEach((button) => {
+            const description = button.getAttribute("data-description");
+
+            // Show tooltip
+            button.addEventListener("mouseover", function () {
+                createTooltip(this, description);
+            });
+
+            // Remove tooltip
+            button.addEventListener("mouseout", function () {
+                const tooltip = this.querySelector(".theme-tooltip");
+                if (tooltip) {
+                    tooltip.remove();
+                }
+            });
+
+            // Theme selection logic
+            button.addEventListener("click", async function () {
+                selectedTheme = this.getAttribute("data-theme");
+
+                try {
+                    const csrfToken = "{{ csrf_token() }}";
+                    const response = await fetch("{{ url_for('public.lab4_sample.select_theme') }}", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "X-CSRFToken": csrfToken,
+                        },
+                        body: JSON.stringify({ theme: selectedTheme }),
+                    });
+
+                    if (response.ok) {
+                        // Hide theme selection and show word input
+                        themeSelectionContainer.style.display = "none";
+                        wordSelectionContainer.classList.remove("hidden");
+                        wordSelectionContainer.classList.add("slide-up");
+                    }
+                } catch (error) {
+                    console.error("Error selecting theme:", error);
+                }
+            });
+        });
+
+        // Show manual word input
+        manualWordTrigger.addEventListener("click", function () {
+            manualWordContainer.classList.remove("hidden");
+            manualWordContainer.classList.add("slide-right");
+        });
+
+        // Handle random word selection
+        randomWordButton.addEventListener("click", async function () {
+            if (!selectedTheme) return;
+
+            try {
+                const response = await fetch("{{ url_for('public.lab4_sample.select_theme') }}", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRFToken": "{{ csrf_token() }}",
+                    },
+                    body: JSON.stringify({
+                        theme: selectedTheme,
+                        selection_mode: "random",
+                    }),
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    window.location.href = data.redirect_url;
+                }
+            } catch (error) {
+                console.error("Error with random selection:", error);
+            }
+        });
+
+        // Handle manual word submission
+        manualWordButton.addEventListener("click", async function () {
+            const wordInput = document.getElementById("manual-word-input").value.trim();
+            if (!selectedTheme || !wordInput) return;
+
+            try {
+                const response = await fetch("{{ url_for('public.lab4_sample.select_theme') }}", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRFToken": "{{ csrf_token() }}",
+                    },
+                    body: JSON.stringify({
+                        theme: selectedTheme,
+                        selection_mode: "manual",
+                        word: wordInput,
+                    }),
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    window.location.href = data.redirect_url;
+                }
+            } catch (error) {
+                console.error("Error with manual submission:", error);
+            }
+        });
+    });
+</script>
+
+<div class="container mt-5 flex-grow-1 mb-5">
+    <div class="mt-4 text-center">
+        <a class="btn btn-primary btn-lg d-inline-block" href="{{ url_for('public.labs') }}" role="button" style="text-decoration: none; width: 100%; max-width: 300px;">
+            Back to Labs
+        </a>
+    </div>
+</div>
+{% endblock %}

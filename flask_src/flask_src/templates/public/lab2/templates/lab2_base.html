@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab 1</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/labs_styles/lab1_style.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Lab 2 - Tour Information</h1>
+    </header>
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+    <footer>
+        <p>&copy; 2024 Tour Info Labs</p>
+    </footer>
+</body>
+</html>

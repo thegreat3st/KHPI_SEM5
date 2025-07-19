@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<body>
+    {% extends 'public/base.html' %}
+
+    {% block title %}Home - Python Frameworks Labs{% endblock %}
+
+    {% block content %}
+    <div class="jumbotron text-center">
+        <h1 class="display-4">Welcome to Python Frameworks Labs</h1>
+        <p class="lead">Explore interactive tasks and solutions from our lab series. Year 2024.</p>
+        <hr class="my-4">
+        
+        <div class="mt-4">
+            <a class="btn btn-primary btn-lg" href="{{ url_for('public.labs') }}" role="button">To Labs</a>
+            <!-- Replace the 'Learn More' button with 'Project Tree Structure' button -->
+            <a class="btn btn-success btn-lg" href="{{ url_for('public.tree_view') }}" role="button">Project Tree Structure</a>
+        </div>
+    </div>
+
+    <section id="highlights" class="text-center my-5">
+        <h2>Lab Highlights</h2>
+        <div class="row justify-content-center">
+            <div class="col-md-3">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5>Interactive Tasks</h5>
+                        <p>Each lab features unique tasks aimed at building practical skills.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5>Results Showcase</h5>
+                        <p>Check your work against example results and learn from feedback.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5>Year 2024 Labs</h5>
+                        <p>Explore labs designed for the latest tech trends in Python frameworks.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Additional Sections -->
+    <section id="about-section" class="text-center my-5">
+        <h2>About This Project</h2>
+        <p>This project showcases a series of Python framework labs designed for learning and experimentation. Each lab contains tasks and corresponding results to help you deepen your understanding of web development with Flask.</p>
+    </section>
+    
+    {% endblock %}
+</body>
+</html>

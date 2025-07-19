@@ -1,0 +1,33 @@
+{% extends "public/lab1/templates/lab1_base.html" %}
+
+{% block title %}Tours{% endblock %}
+
+{% block content %}
+    {% if tours %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Country</th>
+                    <th>Operator</th>
+                    <th>Price</th>
+                    <th>Days</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for tour in tours %}
+                <tr>
+                    <td>{{ tour.country }}</td>
+                    <td>{{ tour.operator }}</td>
+                    <td>{{ tour.price }}</td>
+                    <td>{{ tour.days }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Немає даних</p>
+        <div class="center-image">
+            <img src="{{ url_for('static', filename='assets/img/image_sample_lab/no_data.png') }}" alt="No data">
+        </div>
+    {% endif %}
+{% endblock %}

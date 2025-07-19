@@ -1,0 +1,97 @@
+/* Body styling */
+body {
+    background-color: #1c1c1c;
+    color: #d4d4d4;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+/* Blue line at the top */
+body::before {
+    content: "";
+    display: block;
+    width: 95%;
+    height: 4px;
+    background-color: #2d3848;
+    margin: 20px auto 10px;
+}
+
+/* Container for the file tree */
+#file-tree {
+    display: flex;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    gap: 10px;
+}
+
+/* Tree container with fixed width and scrollable overflow */
+#tree-container {
+    width: 20%;
+    max-height: 700px;
+    padding-right: 10px;
+    border-right: 2px solid #2d3848;
+    overflow-y: auto;
+}
+
+/* File content container with fixed width and scrollable overflow */
+#file-content {
+    width: 80%;
+    max-height: 700px;
+    padding-left: 20px;
+    overflow-y: auto;
+    position: relative;
+}
+
+/* Back to homepage button styling */
+#back-home {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    background-color: #007acc; /* Blue color */
+    color: white;
+    padding: 8px 12px;
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+#back-home:hover {
+    background-color: #005fa3;
+}
+
+/* File content display box */
+pre#content-display {
+    font-family: "Courier New", monospace;
+    white-space: pre-wrap;
+    background-color: #1e1e1e;
+    padding: 10px;
+    border-radius: 5px;
+    color: #d4d4d4;
+    line-height: 1.4;
+}
+
+/* Styling for folders and files */
+ul {
+    list-style-type: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+/* Folder and file font style */
+.folder button, .file {
+    font-size: 14px;
+    font-family: Arial, sans-serif;
+    color: #d4d4d4;
+    cursor: pointer;
+    padding: 0;
+    background: none;
+    border: none;
+}
+
+/* Reduced indentation for child folders/files */
+.folder, .file {
+    padding-left: 5px;
+    margin-top: 2px;
+}

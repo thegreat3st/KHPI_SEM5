@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<body>
+    {% extends 'public/base.html' %}
+
+    {% block title %}Lab {{ lab_id }} - Results{% endblock %}
+
+    {% block content %}
+    <div class="container my-5">
+        <h2 class="text-center">Lab {{ lab_id }} Results</h2>
+        <hr>
+
+        <!-- Display video if available -->
+        {% if video_path %}
+            <div class="result-video mb-4 text-center">
+                <video width="75%" controls>
+                    <source src="{{ url_for('static', filename=video_path.split('/static/')[-1]) }}" type="video/mp4">
+                </video>
+            </div>
+        {% endif %}
+
+        <!-- Display images dynamically, sorted and with names above -->
+        <div class="result-images">
+            {% for image in images %}
+                {% set image_name = image.split('_', 1)[1].rsplit('.', 1)[0].replace('_', ' ') %}
+                <div class="image-container mb-3 text-center">
+                    <p>{{ image_name }}</p>
+                    <img src="{{ url_for('static', filename='assets/img/image_for_lab' + lab_id|string + '_res/' + image) }}" 
+                         alt="{{ image_name }}" class="img-fluid">
+                </div>
+            {% endfor %}
+        </div>
+
+        <!-- Buttons Section -->
+        <div class="mt-4 text-center">
+            <a href="{{ url_for('public.labs') }}" class="btn btn-secondary">Back to Labs</a>
+            
+            {% if lab_id in [1, 2, 4] %}
+                <a href="{{ url_for('public.lab.lab_to_result', lab_id=lab_id) }}" class="btn btn-primary">To Results</a>
+            {% endif %}
+
+            {% if lab_id == 4 %}
+                <a href="{{ url_for('public.lab4_sample.select_theme') }}" class="btn btn-success">Play Hangman</a>
+            {% endif %}
+        </div>
+    </div>
+    {% endblock %}
+</body>
+</html>
+

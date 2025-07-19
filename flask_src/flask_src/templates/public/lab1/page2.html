@@ -1,0 +1,12 @@
+{% extends 'public/lab1/lab1_to_result.html' %}
+
+{% block content %}
+<div class="content">
+    <h2 class="display-4">Some data for page 2</h2>
+    <p>No data</p>
+</div>
+
+<div class="text-center mt-5">
+    <a href="{{ url_for('public.lab.lab_to_result', lab_id=lab_id) }}" class="btn btn-secondary">Back to Lab {{ lab_id }} To Result page</a>
+</div>
+{% endblock %}

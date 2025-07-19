@@ -1,0 +1,291 @@
+/* General Styling */
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+header h1 {
+    margin-top: 20px;
+    font-size: 2.5rem;
+}
+
+h2 {
+    margin: 20px 0;
+    font-size: 1.5rem;
+}
+
+/* .container {
+    padding: 20px;
+} */
+
+.container {
+    flex: 1 0 auto;
+    padding-bottom: 50px;
+  }
+
+/* Theme Buttons */
+#theme-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+/* .theme-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.theme-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    justify-items: center;
+    align-items: center;
+    margin: 0 auto;
+    max-width: 800px;
+} */
+
+.theme-button {
+    padding: 10px 20px;
+    border-radius: 8px;
+    background-color: black;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.theme-button:hover {
+    background-color: #333;
+}
+
+.tooltip {
+    background-color: #333;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 14px;
+    z-index: 10;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+/* Word Input */
+/* #word-input-container {
+    margin-top: 20px;
+    display: none;
+} */
+
+/* #word-input-container.hidden {
+    display: none;
+} */
+
+/* #word-input-container.slide-up {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    animation: slide-up 0.5s forwards;
+} */
+
+/* #word-input {
+    padding: 10px;
+    font-size: 1.2rem;
+    width: 300px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    margin-bottom: 10px;
+} */
+
+/* #submit-word {
+    padding: 10px 20px;
+    font-size: 1rem;
+    background-color: #000;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+} */
+
+/* #submit-word:hover {
+    background-color: #333;
+} */
+
+.hidden {
+    display: none;
+}
+
+.slide-up {
+    animation: slideUp 0.5s forwards;
+}
+
+.slide-right {
+    animation: slideRight 0.5s forwards;
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+button, input {
+    padding: 10px;
+    margin: 5px;
+    font-size: 16px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease-in-out;
+}
+
+button:hover {
+    background-color: #f0f0f0;
+    transform: scale(1.05);
+}
+
+
+.play-game-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.hangman-game-layout {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin: 20px auto;
+    max-width: 800px;
+}
+
+#word-placeholder {
+    font-size: 24px;
+    text-align: center;
+    flex: 1;
+}
+
+#used-letters {
+    flex: 0.5;
+    text-align: left;
+}
+
+#hangman-drawing {
+    flex: 0.5;
+    text-align: right;
+}
+
+/* .keyboard {
+    margin-top: 30px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+} */
+
+/* .keyboard-letter {
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    font-size: 18px;
+    line-height: 40px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+} */
+
+/* .keyboard-letter:hover {
+    background-color: lightgray;
+    text-decoration: underline;
+} */
+
+/* .keyboard-letter:disabled {
+    background-color: lightgray;
+    color: darkgray;
+    cursor: not-allowed;
+    pointer-events: none;
+} */
+
+/* .incorrect-letters {
+    color: darkred;
+    font-weight: bold;
+} */
+
+/* General game layout */
+.game-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.theme-display {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.word-placeholder {
+    font-size: 36px;
+    margin: 20px 0;
+    letter-spacing: 10px;
+}
+
+.tries-info {
+    font-size: 18px;
+    margin: 10px 0;
+}
+
+/* Keyboard styling */
+.keyboard {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    gap: 10px;
+    max-width: 600px;
+    margin-top: 20px;
+}
+
+.key {
+    padding: 10px;
+    font-size: 18px;
+    text-align: center;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.key:hover {
+    background-color: #d0d0d0;
+    transform: scale(1.1);
+}
+
+.key:disabled {
+    background-color: #888;
+    color: #ccc;
+    cursor: not-allowed;
+}

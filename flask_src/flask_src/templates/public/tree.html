@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>File Tree Viewer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/tree.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/themes/prism-okaidia.min.css">
+</head>
+<body>
+    <!-- File Tree Container with data-dir-structure as a JSON string -->
+    <div id="file-tree" data-dir-structure='{{ dir_structure|tojson|safe }}'>
+        <div id="tree-container"></div>
+        <div id="file-content">
+            <a href="{{ url_for('public.home') }}" id="back-home">Back to homepage</a>
+            <h3>File Content</h3>
+            <pre><code id="content-display" class="language-javascript"></code></pre>
+        </div>
+    </div>
+
+    <!-- Include the JavaScript file -->
+    <script src="{{ url_for('static', filename='js/tree.js') }}"></script>
+
+    <!-- Prism.js syntax highlighting library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/prism.min.js"></script>
+</body>
+</html>

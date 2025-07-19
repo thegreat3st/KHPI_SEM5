@@ -1,0 +1,95 @@
+{% extends 'public/lab4/templates/lab4_base.html' %}
+
+{% block content %}
+<div class="game-container">
+    <!-- Display chosen theme -->
+    <div class="theme-display">
+        Theme: <span id="chosen-theme">{{ theme }}</span>
+    </div>
+
+    <!-- Word placeholder -->
+    <div class="word-placeholder" id="word-placeholder">
+        {{ placeholder }}
+    </div>
+
+    <!-- Number of tries left -->
+    <div class="tries-info">
+        Tries Left: <span id="tries-left">6</span>
+    </div>
+
+    <!-- Keyboard -->
+    <div class="keyboard">
+        {% for letter in 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' %}
+        <button class="key" data-letter="{{ letter }}">{{ letter }}</button>
+        {% endfor %}
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const word = "{{ word }}";
+        let triesLeft = 6;
+        let guessedWord = Array(word.length).fill('_');
+        const placeholder = document.getElementById('word-placeholder');
+        const triesDisplay = document.getElementById('tries-left');
+        const keys = document.querySelectorAll('.key');
+
+        const updatePlaceholder = () => {
+            placeholder.innerText = guessedWord.join(' ');
+        };
+
+        const disableKey = (key) => {
+            key.disabled = true;
+            key.style.backgroundColor = 'dullgrey';
+        };
+
+        const gameOver = async (message) => {
+            alert(message);
+        
+            try {
+                await fetch("{{ url_for('public.lab4_sample.end_game') }}", {
+                    method: "POST",
+                });
+            } catch (error) {
+                console.error("Error clearing session:", error);
+            }
+        
+            window.location.href = "{{ url_for('public.lab4_sample.select_theme') }}";
+        };
+        
+
+        keys.forEach((key) => {
+            key.addEventListener('click', () => {
+                const letter = key.getAttribute('data-letter');
+                if (!letter) return;
+
+                disableKey(key);
+
+                if (word.includes(letter)) {
+                    for (let i = 0; i < word.length; i++) {
+                        if (word[i] === letter) {
+                            guessedWord[i] = letter;
+                        }
+                    }
+                    updatePlaceholder();
+
+                    // Check if the user has won
+                    if (guessedWord.join('') === word) {
+                        gameOver("Congratulations, You Won!");
+                    }
+                } else {
+                    triesLeft--;
+                    triesDisplay.innerText = triesLeft;
+
+                    // Check if the user has lost
+                    if (triesLeft <= 0) {
+                        gameOver(`Game Over! The word was: ${word}`);
+                    }
+                }
+            });
+        });
+
+        updatePlaceholder(); // Initialize the placeholder
+    });
+</script>
+{% endblock %}
