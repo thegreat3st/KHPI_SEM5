@@ -1,0 +1,65 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+#Main--------------------------------------
+python-dotenv = "~=1.0"
+#Algos-------------------------------------
+numpy = "*"
+pandas = "~=2.3"
+httpx = "~=0.25"
+asyncio = "~=3.4"
+pyinstaller = "*"
+#flask packages----------------------------
+flask = "*"
+click = "~=8.1"
+Werkzeug = "~=3.0"
+flask-restful = "*"
+flask-login = "*"
+flask-static-digest = "*"
+celery = {version = "==5.4", extras = ["redis"]}
+# Migrations
+flask-migrate = "*"
+# Database
+Flask-SQLAlchemy = "~=3.1"
+SQLAlchemy = "~=2.0"
+# Forms
+email-validator = '*'
+flask-wtf = "*"
+WTForms = "~=3.2"
+# Other
+flask-caching = "*"
+flask-debugtoolbar = "*"
+flask-bcrypt = "*"
+environs = '*'
+# Deployment
+gevent = "~=24.10"
+supervisor = "~=4.2"
+#Mysql-------------------------------------
+mysqlclient = "~=2.2"
+pymysql = '*'
+cookiecutter = "*"
+opencv-python = "*"
+objgraph = "*"
+memory-profiler = "*"
+psutil = "*"
+markdown = "*"
+flask-assets = "*"
+
+[dev-packages]
+#Main--------------------------------------
+requests = "*"
+requests-cache = "*"
+flake8 = "*"
+mock = "*"
+beautifulsoup4 = "*"
+#Flask dev-pack----------------------------
+# Testing factory-boy==3.3.1 pytest==8.3.3 pytest-cov==5.0.0 WebTest==3.0.1
+
+[requires]
+python_version = "3.13"
+python_full_version = "3.13.0"
+
+
